@@ -125,11 +125,16 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="model.cpp" />
+    <ClCompile Include="objfilemodel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="model.h" />
+    <ClInclude Include="objfilemodel.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="model_shaders.hlsl" />
     <FxCompile Include="shaders.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>

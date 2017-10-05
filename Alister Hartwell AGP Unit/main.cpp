@@ -46,15 +46,19 @@ ID3D11ShaderResourceView*	g_pTexture0;
 ID3D11SamplerState*			g_pSampler0;
 
 // Colours! WOOO Pretty colours
-XMFLOAT4	_Clear = (0.0f, 0.0f, 0.0f, 0.0f);
-XMFLOAT4	_Black = (0.0f, 0.0f, 0.0f, 1.0f);
-XMFLOAT4	_White = (1.0f, 1.0f, 1.0f, 1.0f);
-XMFLOAT4	_Blue = (0.0f, 0.0f, 1.0f, 1.0f);
-XMFLOAT4	_Green = (0.0f, 1.0f, 0.0f, 1.0f);
-XMFLOAT4	_Red = (1.0f, 0.0f, 0.0f, 1.0f);
-XMFLOAT4	_Yellow = (1.0f, 1.0f, 0.0f, 1.0f);
-XMFLOAT4	_Cyan = (0.0f, 1.0f, 1.0f, 1.0f);
-XMFLOAT4	_Purple = (1.0f, 0.0f, 1.0f, 1.0f);
+
+XMVECTOR	_Clear	=	 XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+XMVECTOR	_Black	=	 XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
+XMVECTOR	_White	=	 XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f);
+XMVECTOR	_Blue	=	 XMVectorSet(0.0f, 0.0f, 1.0f, 1.0f);
+XMVECTOR	_Green	=	 XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);
+XMVECTOR	_Red	=	 XMVectorSet(1.0f, 0.0f, 0.0f, 1.0f);
+XMVECTOR	_Yellow	=	 XMVectorSet(1.0f, 1.0f, 0.0f, 1.0f);
+XMVECTOR	_Cyan	=	 XMVectorSet(0.0f, 1.0f, 1.0f, 1.0f);
+XMVECTOR	_Purple	=	 XMVectorSet(1.0f, 0.0f, 1.0f, 1.0f);
+
+
+
 
 // Vertex Structure
 struct POS_COL_TEX_NORM_VERTEX
