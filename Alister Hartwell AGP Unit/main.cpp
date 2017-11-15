@@ -2,9 +2,11 @@
 #include <d3d11.h>
 #include <d3dx11.h>
 #include <dxerr.h>
-#include "camera.h"
 #include <stdio.h>
 int (WINAPIV * __vsnprintf_s)(char *, size_t, const char*, va_list) = _vsnprintf;
+#include "camera.h"
+#include "model.h"
+
 
 #define _XM_NO_INTRINSICS_
 #define XM_NO_ALIGNMENT
@@ -44,6 +46,10 @@ ID3D11Buffer*				g_pConstantBuffer0;
 ID3D11DepthStencilView*		g_pZBuffer;
 ID3D11ShaderResourceView*	g_pTexture0;
 ID3D11SamplerState*			g_pSampler0;
+
+//Objects
+Model*						g_Model;
+
 
 // Colours! WOOO Pretty colours
 
@@ -209,41 +215,49 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			_scaleUpdate += -0.1f;
 			_redValue += -0.1f;
+			g_Model->IncScale(0.2f);
 		}
 
 		if (wParam == VK_DOWN)
 		{
 			_scaleUpdate += 0.1f;
 			_redValue += 0.1f;
+			g_Model->IncScale(-0.2f);
 		}
 
 		if (wParam == VK_LEFT)
 		{
 			_degrees += 2.0f;
+			g_Model->IncXRot(2.0f);
+			g_Model->IncYRot(2.0f);
+			g_Model->IncZRot(2.0f);
 		}
 
 		if (wParam == VK_RIGHT)
 		{
 			_degrees -= 2.0f;
+			g_Model->IncXRot(-2.0f);
+			g_Model->IncYRot(-2.0f);
+			g_Model->IncZRot(-2.0f);
 		}
 		if (wParam == 0x57) // W key
 		{
-			mainCamera->Forward(0.1f);
+			mainCamera->Forward(0.2f);
 			//mainCamera->MoveForward(true);
 		}
 		if (wParam == 0x53) // S key
 		{
-			mainCamera->Forward(-0.1f);
+			mainCamera->Forward(-0.2f);
 			//mainCamera->MoveBackward(true);
 		}
 
 		if (wParam == 0x41) // A key
 		{
-			mainCamera->RotateCamera(-0.1);
+			mainCamera->RotateCamera(-0.2);
 		}
 		if (wParam == 0x44) // D key
 		{
-			mainCamera->RotateCamera(0.1);
+			mainCamera->RotateCamera(0.2);
 		}
 		//if (wParam == 0x46) // F key
 		//{
@@ -440,6 +454,11 @@ HRESULT InitialiseGraphics() //03-01
 {
 	HRESULT hr = S_OK;
 
+	g_Model = new Model(g_pD3DDevice, g_pImmediateContext);
+	g_Model->LoadObjModel("assets/cube.obj");
+
+
+
 	// Define vertices of a triangle - screen coords -1.0 - +1.0
 	POS_COL_TEX_NORM_VERTEX vertices[] =
 	{
@@ -634,18 +653,18 @@ void RenderFrame(void)
 
 	// RENDER HERE
 	// Set Vertex Buffer // 03-01
-	UINT stride = sizeof(POS_COL_TEX_NORM_VERTEX);
-	UINT offset = 0;
+	//UINT stride = sizeof(POS_COL_TEX_NORM_VERTEX);
+	//UINT offset = 0;
 
-	g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
+	//g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
 
-	// Select which primitive type to use //03-01
-	g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//// Select which primitive type to use //03-01
+	//g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	// % of vertex red value / 1.0 == 100%
-	cb0_values.RedAmount = _redValue;
+	//// % of vertex red value / 1.0 == 100%
+	//cb0_values.RedAmount = _redValue;
 
-	cb0_values.Scale = _scaleUpdate;
+	//cb0_values.Scale = _scaleUpdate;
 
 	//Lighting Stuff
 	XMMATRIX transpose;
@@ -674,16 +693,20 @@ void RenderFrame(void)
 	cb0_values.directional_light_vector = XMVector3Transform(g_directional_light_shines_from, transpose);
 	cb0_values.directional_light_vector = XMVector3Normalize(cb0_values.directional_light_vector);
 
-	//Upload the new values for the constant buffer
-	g_pImmediateContext->UpdateSubresource(g_pConstantBuffer0, 0, 0, &cb0_values, 0, 0);
 
-	g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer0); // Set buffer to be active, 1 buffer in slot 0
 
-	g_pImmediateContext->PSSetSamplers(0, 1, &g_pSampler0);
-	g_pImmediateContext->PSSetShaderResources(0, 1, &g_pTexture0);
+	g_Model->Draw(&view, &projection);
 
-	// Draw the Vertex Buffer to the back buffer //03-01
-	g_pImmediateContext->Draw(36, 0);
+	////Upload the new values for the constant buffer
+	//g_pImmediateContext->UpdateSubresource(g_pConstantBuffer0, 0, 0, &cb0_values, 0, 0);
+
+	//g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer0); // Set buffer to be active, 1 buffer in slot 0
+
+	//g_pImmediateContext->PSSetSamplers(0, 1, &g_pSampler0);
+	//g_pImmediateContext->PSSetShaderResources(0, 1, &g_pTexture0);
+
+	//// Draw the Vertex Buffer to the back buffer //03-01
+	//g_pImmediateContext->Draw(36, 0);
 
 
 	// Display what has just been rendered

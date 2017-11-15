@@ -1,7 +1,7 @@
 cbuffer CB0
 {
-	matrix WVPMatrix		//64 Byted
-}; //Total Size 64 Bytes
+	matrix WVPMatrix;		//64 Bytes
+} //Total Size 64 Bytes
 
 Texture2D texture0;
 SamplerState sampler0;
@@ -17,7 +17,7 @@ VOut ModelVS(float4 position : POSITION, float2 texcoord : TEXCOORD, float3 norm
 {
 	VOut output;
 
-	float4 default_color = { 1, 1, 1, 1 };
+	float4 default_color = {1, 1, 1, 1};
 
 	output.position = mul(WVPMatrix, position);
 

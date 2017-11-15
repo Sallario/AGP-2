@@ -134,7 +134,9 @@
     <ClInclude Include="objfilemodel.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="model_shaders.hlsl" />
+    <FxCompile Include="model_shaders.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="shaders.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>

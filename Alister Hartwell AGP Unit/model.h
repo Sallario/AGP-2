@@ -23,9 +23,51 @@ private:
 
 public:
 	Model(ID3D11Device* device, ID3D11DeviceContext* context);
+	~Model();
 
-	ObjFileModel *m_pObject;
+	
 
 	int LoadObjModel(char* filename);
+	void Draw(XMMATRIX* view, XMMATRIX* projection);
+
+
+	////////////////////////////////////////////////////////
+	//Object manipulation
+	////////////////////////////////////////////////////////
+
+
+	//Set Functions
+	void SetXPos(float x);
+	void SetYPos(float y);
+	void SetZPos(float z);
+
+	void SetXRot(float x);
+	void SetYRot(float y);
+	void SetZRot(float z);
+
+	void SetScale(float x);
+	
+
+	//Get Functions
+	float GetXPos();
+	float GetYPos();
+	float GetZPos();
+
+	float GetXRot();
+	float GetYRot();
+	float GetZRot();
+
+	float GetScale();
+
+	//Incremental Functions
+	void IncXPos(float x);
+	void IncYPos(float y);
+	void IncZPos(float z);
+
+	void IncXRot(float x);
+	void IncYRot(float y);
+	void IncZRot(float z);
+
+	void IncScale(float x);
 
 };
