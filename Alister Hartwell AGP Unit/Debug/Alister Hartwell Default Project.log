@@ -83,7 +83,11 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2732)
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2742): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2743): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2754): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
-u:\alister hartwell agp 2\alister hartwell agp unit\model.h(28): warning C4305: 'initializing': truncation from 'double' to 'const float'
 u:\alister hartwell agp 2\alister hartwell agp unit\model.h(29): warning C4305: 'initializing': truncation from 'double' to 'const float'
+u:\alister hartwell agp 2\alister hartwell agp unit\model.h(30): warning C4305: 'initializing': truncation from 'double' to 'const float'
+u:\alister hartwell agp 2\alister hartwell agp unit\model.cpp(16): warning C4018: '<': signed/unsigned mismatch
+u:\alister hartwell agp 2\alister hartwell agp unit\model.cpp(39): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+u:\alister hartwell agp 2\alister hartwell agp unit\model.cpp(40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+u:\alister hartwell agp 2\alister hartwell agp unit\model.cpp(41): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Alister Hartwell Default Project.vcxproj -> U:\Alister Hartwell AGP 2\Alister Hartwell AGP Unit\Debug\Alister Hartwell Default Project.exe
   Alister Hartwell Default Project.vcxproj -> U:\Alister Hartwell AGP 2\Alister Hartwell AGP Unit\Debug\Alister Hartwell Default Project.pdb (Partial PDB)

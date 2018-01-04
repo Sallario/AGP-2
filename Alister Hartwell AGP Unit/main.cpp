@@ -23,7 +23,7 @@ float _degrees = 45.0f;
 
 Camera* mainCamera;
 // Rename for each tutorial
-char g_TutorialName[100] = "Alister Hartwell Tutorial 8\0";
+char g_TutorialName[100] = "Alister Hartwell Tutorial 10\0";
 
 D3D_DRIVER_TYPE				g_driverType = D3D_DRIVER_TYPE_NULL;
 D3D_FEATURE_LEVEL			g_featureLevel = D3D_FEATURE_LEVEL_11_0;
@@ -443,7 +443,7 @@ void ShutDownD3D()
 	if (g_pImmediateContext)	 g_pImmediateContext->Release();
 
 
-	delete mainCamera;
+	if (mainCamera)				delete mainCamera;
 }
 
 

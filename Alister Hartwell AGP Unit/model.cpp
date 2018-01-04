@@ -9,6 +9,63 @@ struct MODEL_CONSTANT_BUFFER
 }; //Total size = 112 Bytes
 
 
+void Model::CalculateModelCentrePoint()
+{
+	float minX = 0, minY = 0, minZ = 0, maxX = 0, maxY = 0, maxZ = 0;
+
+	for (int i = 0; i < m_pObject->numverts; i++)
+	{
+		if (m_pObject->vertices[i].Pos.x < minX)
+			minX = m_pObject->vertices[i].Pos.x;
+
+		if (m_pObject->vertices[i].Pos.x > maxX)
+			maxX = m_pObject->vertices[i].Pos.x;
+
+		if (m_pObject->vertices[i].Pos.y < minY)
+			minY = m_pObject->vertices[i].Pos.y;
+
+		if (m_pObject->vertices[i].Pos.y > maxY)
+			maxY = m_pObject->vertices[i].Pos.y;
+
+		if (m_pObject->vertices[i].Pos.z < minZ)
+			minZ = m_pObject->vertices[i].Pos.z;
+
+		if (m_pObject->vertices[i].Pos.z > maxZ)
+			maxZ = m_pObject->vertices[i].Pos.z;
+
+			
+	}
+
+	m_bounding_sphere_centre_x = ((maxX - minX) * 0.5);
+	m_bounding_sphere_centre_y = ((maxY - minY) * 0.5);
+	m_bounding_sphere_centre_z = ((maxZ - minZ) * 0.5);
+
+	CalculateBoundingSphereRadius(minX, maxX, minY, maxY, minZ, maxZ);
+
+}
+
+void Model::CalculateBoundingSphereRadius(float minx, float maxx, float miny, float maxy, float minz, float maxz)
+{
+	float x = maxx - minx;
+	float y = maxy - miny;
+	float z = maxz - minz;
+	
+	//Work out which diameter is the largest
+	m_bounding_sphere_radius = x;
+
+	if (y > m_bounding_sphere_radius)
+		m_bounding_sphere_radius = y;
+
+	if (z > m_bounding_sphere_radius)
+		m_bounding_sphere_radius = z;
+
+	 //Half it to get the radius
+	m_bounding_sphere_radius *= 0.5;
+}
+
+
+
+
 Model::Model(ID3D11Device* device, ID3D11DeviceContext* context)
 {
 	m_pD3DDevice = device;
@@ -116,6 +173,8 @@ int Model::LoadObjModel(char * filename)
 
 	if (FAILED(hr))
 		return hr;
+
+	CalculateModelCentrePoint();
 
 	return 0;
 }

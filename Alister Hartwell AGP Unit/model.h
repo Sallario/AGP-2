@@ -21,12 +21,16 @@ private:
 	float m_xangle, m_zangle, m_yangle;
 	float m_scale;
 	float m_dx, m_dy, m_dz;
+	float m_bounding_sphere_centre_x, m_bounding_sphere_centre_y, m_bounding_sphere_centre_z, m_bounding_sphere_radius;
 	XMVECTOR	m_directional_light_shines_from;
 	XMVECTOR	m_directional_light_colour;
 	XMVECTOR	m_ambient_light_colour;
 
 	const float DegreesToRadian = 0.01745329251;
 	const float RadianToDegrees = 57.2957795131; // Both of these constants are used to save on calculation times since division is expensive
+
+	void CalculateModelCentrePoint();
+	void CalculateBoundingSphereRadius(float minx, float maxx, float  miny, float maxy, float minz, float maxz);
 
 public:
 	Model(ID3D11Device* device, ID3D11DeviceContext* context);
