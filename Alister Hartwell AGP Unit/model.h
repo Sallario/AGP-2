@@ -20,6 +20,13 @@ private:
 	float m_x, m_y, m_z;
 	float m_xangle, m_zangle, m_yangle;
 	float m_scale;
+	float m_dx, m_dy, m_dz;
+	XMVECTOR	m_directional_light_shines_from;
+	XMVECTOR	m_directional_light_colour;
+	XMVECTOR	m_ambient_light_colour;
+
+	const float DegreesToRadian = 0.01745329251;
+	const float RadianToDegrees = 57.2957795131; // Both of these constants are used to save on calculation times since division is expensive
 
 public:
 	Model(ID3D11Device* device, ID3D11DeviceContext* context);
@@ -46,6 +53,8 @@ public:
 	void SetZRot(float z);
 
 	void SetScale(float x);
+
+	void SetLighting(XMVECTOR shineFrom, XMVECTOR colour, XMVECTOR ambientLight);
 	
 
 	//Get Functions
@@ -59,6 +68,10 @@ public:
 
 	float GetScale();
 
+	XMVECTOR GetShineFrom();
+	XMVECTOR GetLightColour();
+	XMVECTOR GetAmbientLight();
+
 	//Incremental Functions
 	void IncXPos(float x);
 	void IncYPos(float y);
@@ -69,5 +82,7 @@ public:
 	void IncZRot(float z);
 
 	void IncScale(float x);
+
+	void LookAt_XZ(float x, float z);
 
 };

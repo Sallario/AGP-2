@@ -10,7 +10,7 @@ cbuffer CBuffer0
 	float4 directional_light_colour; //16 Bytes
 	float4 ambient_light_colour; //16 Bytes
 	float2 packing;		// 2x4 bytes = 8 bytes
-} // Total Size = 80 bytes
+} // Total Size = 128 bytes
 
 
 struct VOut

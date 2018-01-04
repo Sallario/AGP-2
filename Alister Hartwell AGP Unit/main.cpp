@@ -651,6 +651,8 @@ void RenderFrame(void)
 	g_directional_light_colour =		XMVectorSet(1.0f, 1.0f, 1.0f, 0.0f);
 	g_ambient_light_colour =			XMVectorSet(0.1f, 0.1f, 0.1f, 1.0f);
 
+	g_Model->SetLighting(g_directional_light_shines_from, g_directional_light_colour, g_ambient_light_colour);
+
 	// RENDER HERE
 	// Set Vertex Buffer // 03-01
 	//UINT stride = sizeof(POS_COL_TEX_NORM_VERTEX);
@@ -695,18 +697,20 @@ void RenderFrame(void)
 
 
 
-	g_Model->Draw(&view, &projection);
+	
 
 	////Upload the new values for the constant buffer
-	//g_pImmediateContext->UpdateSubresource(g_pConstantBuffer0, 0, 0, &cb0_values, 0, 0);
+	g_pImmediateContext->UpdateSubresource(g_pConstantBuffer0, 0, 0, &cb0_values, 0, 0);
 
-	//g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer0); // Set buffer to be active, 1 buffer in slot 0
+	g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer0); // Set buffer to be active, 1 buffer in slot 0
 
-	//g_pImmediateContext->PSSetSamplers(0, 1, &g_pSampler0);
-	//g_pImmediateContext->PSSetShaderResources(0, 1, &g_pTexture0);
+	g_pImmediateContext->PSSetSamplers(0, 1, &g_pSampler0);
+	g_pImmediateContext->PSSetShaderResources(0, 1, &g_pTexture0);
 
 	//// Draw the Vertex Buffer to the back buffer //03-01
 	//g_pImmediateContext->Draw(36, 0);
+
+	g_Model->Draw(&view, &projection);
 
 
 	// Display what has just been rendered

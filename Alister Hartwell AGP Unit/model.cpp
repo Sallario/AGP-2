@@ -3,7 +3,10 @@
 struct MODEL_CONSTANT_BUFFER
 {
 	XMMATRIX WorldViewProjection;	//64 Bytes
-}; //Total size = 64 Bytes
+	XMVECTOR directional_light_vector; //16 Bytes
+	XMVECTOR directional_light_colour; //16 Bytes
+	XMVECTOR ambient_light_colour; //16 Bytes
+}; //Total size = 112 Bytes
 
 
 Model::Model(ID3D11Device* device, ID3D11DeviceContext* context)
@@ -13,7 +16,7 @@ Model::Model(ID3D11Device* device, ID3D11DeviceContext* context)
 
 	m_x = 0.0f;
 	m_y = 0.0f;
-	m_z = 0.0f;
+	m_z = 10.0f;
 
 	m_xangle = 0.0f;
 	m_yangle = 0.0f;
@@ -106,7 +109,7 @@ int Model::LoadObjModel(char * filename)
 	ZeroMemory(&constant_buffer_desc, sizeof(constant_buffer_desc));
 
 	constant_buffer_desc.Usage = D3D11_USAGE_DEFAULT; // Can use UpdateSubresource() to update
-	constant_buffer_desc.ByteWidth = 64; // Must be a multiple of 16, calculate from Constant buffer struct
+	constant_buffer_desc.ByteWidth = 112; // Must be a multiple of 16, calculate from Constant buffer struct
 	constant_buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER; // Use as a constant buffer
 
 	hr = m_pD3DDevice->CreateBuffer(&constant_buffer_desc, NULL, &m_pConstantBuffer);
@@ -119,7 +122,7 @@ int Model::LoadObjModel(char * filename)
 
 void Model::Draw(XMMATRIX * view, XMMATRIX * projection)
 {
-	XMMATRIX world;
+	XMMATRIX world, transpose;
 
 	world = XMMatrixRotationX(XMConvertToRadians(m_xangle));
 	world *= XMMatrixRotationY(XMConvertToRadians(m_yangle));
@@ -129,8 +132,16 @@ void Model::Draw(XMMATRIX * view, XMMATRIX * projection)
 
 	world *= XMMatrixTranslation(m_x, m_y, m_z);
 
+	transpose = XMMatrixTranspose(world);
+
 	MODEL_CONSTANT_BUFFER model_cb_values;
 	model_cb_values.WorldViewProjection = world*(*view)*(*projection); //(*view) this dereferences the pointer
+
+	model_cb_values.directional_light_colour = m_directional_light_colour;
+	model_cb_values.ambient_light_colour = m_ambient_light_colour;
+
+	model_cb_values.directional_light_vector = XMVector3Transform(m_directional_light_shines_from, transpose);
+	model_cb_values.directional_light_vector = XMVector3Normalize(model_cb_values.directional_light_vector);
 
 	m_pImmediateContext->UpdateSubresource(m_pConstantBuffer, 0, 0, &model_cb_values, 0, 0);
 
@@ -185,6 +196,13 @@ void Model::SetScale(float x)
 	m_scale = x;
 }
 
+void Model::SetLighting(XMVECTOR shineFrom, XMVECTOR colour, XMVECTOR ambientLight)
+{
+	m_directional_light_shines_from = shineFrom;
+	m_directional_light_colour = colour;
+	m_ambient_light_colour = ambientLight;
+}
+
 
 //Get Functions
 float Model::GetXPos()
@@ -222,6 +240,21 @@ float Model::GetScale()
 	return m_scale;
 }
 
+XMVECTOR Model::GetShineFrom()
+{
+	return m_directional_light_shines_from;
+}
+
+XMVECTOR Model::GetLightColour()
+{
+	return m_directional_light_colour;
+}
+
+XMVECTOR Model::GetAmbientLight()
+{
+	return m_ambient_light_colour;
+}
+
 
 //Incremental Functions
 void Model::IncXPos(float x)
@@ -257,4 +290,12 @@ void Model::IncZRot(float z)
 void Model::IncScale(float x)
 {
 	m_scale += x;
+}
+
+void Model::LookAt_XZ(float x, float z)
+{
+	m_dx = x - m_x;
+	m_dz = z - m_z;
+
+	m_yangle = atan2(m_dx, m_dz) * RadianToDegrees;
 }

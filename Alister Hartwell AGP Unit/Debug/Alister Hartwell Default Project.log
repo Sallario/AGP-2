@@ -83,5 +83,7 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2732)
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2742): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2743): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\xnamath.h(2754): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
+u:\alister hartwell agp 2\alister hartwell agp unit\model.h(28): warning C4305: 'initializing': truncation from 'double' to 'const float'
+u:\alister hartwell agp 2\alister hartwell agp unit\model.h(29): warning C4305: 'initializing': truncation from 'double' to 'const float'
   Alister Hartwell Default Project.vcxproj -> U:\Alister Hartwell AGP 2\Alister Hartwell AGP Unit\Debug\Alister Hartwell Default Project.exe
   Alister Hartwell Default Project.vcxproj -> U:\Alister Hartwell AGP 2\Alister Hartwell AGP Unit\Debug\Alister Hartwell Default Project.pdb (Partial PDB)

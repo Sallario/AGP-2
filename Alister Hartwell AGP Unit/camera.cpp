@@ -101,6 +101,21 @@ void Camera::Forward(float distance)
 
 }
 
+float Camera::GetX()
+{
+	return m_x;
+}
+
+float Camera::GetY()
+{
+	return m_y;
+}
+
+float Camera::GetZ()
+{
+	return m_z;
+}
+
 XMMATRIX Camera::GetViewMatrix()
 {
 	m_dx = sinf(m_camera_angle * DegreesToRadian);

@@ -46,6 +46,10 @@ public:
 	void RotateCamera(float DegreesOfRotation);
 	void Forward(float distance);
 
+	float GetX();
+	float GetY();
+	float GetZ();
+
 	XMMATRIX GetViewMatrix();
 
 	/*void SetPosition(float, float, float);
